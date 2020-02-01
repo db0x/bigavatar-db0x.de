@@ -34,6 +34,10 @@ function enable() {
 }
 
 function disable() {
+    if (this._menuOpenStateChangedId) {
+        this.systemMenu.menu.disconnect(this._menuOpenStateChangedId);
+        this._menuOpenStateChangedId = 0;
+    }
     iconMenuItem.destroy();
 }
 
