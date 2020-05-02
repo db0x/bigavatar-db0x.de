@@ -5,6 +5,7 @@ const { AccountsService, Clutter, GLib, St } = imports.gi;
 const { Avatar } = imports.ui.userWidget;
 const Config = imports.misc.config;
 const GObject = imports.gi.GObject;
+const Util = imports.misc.util;
 
 var iconMenuItem = null;
 
@@ -22,13 +23,11 @@ function enable() {
         function(menu, open) {
                 if (!open)
                     return;
-
             var userManager = AccountsService.UserManager.get_default();
             var user = userManager.get_user(GLib.get_user_name());
             var avatar = new Avatar(user, { 
                 iconSize: 128
             });
-
             avatar.update();
             this.iconMenuItem.actor.get_last_child().remove_all_children();     
             this.iconMenuItem.actor.get_last_child().add_child(avatar.actor);
@@ -37,6 +36,10 @@ function enable() {
             	this.systemMenu.menu.box.get_child_at_index(0).get_child_at_index(1).set_icon_name('avatar-default-symbolic');
 			}
         }));
+}
+
+function openUserAccount() {
+    Util.spawn(['/bin/bash', '-c', "gnome-control-center user-accounts"]);
 }
 
 function disable() {
@@ -59,6 +62,8 @@ if (shell_Version < '3.36') {
 	        this.actor.add(box, {
 	            expand: true
 	        });
+		    this.actor.connect('button-press-event', openUserAccount);
+
 	    }
 	}
 } else {
@@ -75,6 +80,7 @@ if (shell_Version < '3.36') {
 		        this.actor.add(box, {
 		            expand: true
 		        });
+		        this.actor.connect('button-press-event', openUserAccount);
             }
 	    }
 	);
