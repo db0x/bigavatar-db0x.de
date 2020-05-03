@@ -56,15 +56,16 @@ if (shell_Version < '3.36') {
 	        super({
 	            reactive: false
 	        });
+            super._init();	        
+			this.actor.connect('button-press-event', openUserAccount);
+	        
 	        var box = new St.BoxLayout({ 
 	            x_align: Clutter.ActorAlign.CENTER,
 	        });
 	        this.actor.add(box, {
 	            expand: true
 	        });
-		    this.actor.connect('button-press-event', openUserAccount);
-
-	    }
+		}
 	}
 } else {
 	var UserIconMenuItem = GObject.registerClass(
@@ -74,13 +75,14 @@ if (shell_Version < '3.36') {
         class UserIconMenuItem extends PopupMenu.PopupBaseMenuItem {
 	    	_init() {
                 super._init();
+		        this.actor.connect('button-press-event', openUserAccount);
+
 		        var box = new St.BoxLayout({ 
 		            x_align: Clutter.ActorAlign.CENTER,
 		        });
 		        this.actor.add(box, {
 		            expand: true
 		        });
-		        this.actor.connect('button-press-event', openUserAccount);
             }
 	    }
 	);
