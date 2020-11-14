@@ -3,7 +3,7 @@
   "description": "Display big avatar in system-menu",
   "name": "BigAvatar",
   "shell-version": [
-    "3.28.4","3.32","3.36"
+    "3.28.4","3.32","3.36","3.38"
   ],
   "url": "",
   "uuid": "bigavatar@db0x.de",
